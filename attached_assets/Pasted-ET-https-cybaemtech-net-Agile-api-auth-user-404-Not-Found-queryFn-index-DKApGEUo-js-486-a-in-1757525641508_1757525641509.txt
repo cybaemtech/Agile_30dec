@@ -1,0 +1,72 @@
+ET https://cybaemtech.in/Agile/api/auth/user 404 (Not Found)
+queryFn @ index-DKApGEUo.js:486
+a @ index-DKApGEUo.js:48
+v @ index-DKApGEUo.js:48
+start @ index-DKApGEUo.js:48
+fetch @ index-DKApGEUo.js:48
+Pd @ index-DKApGEUo.js:48
+onSubscribe @ index-DKApGEUo.js:48
+subscribe @ index-DKApGEUo.js:48
+(anonymous) @ index-DKApGEUo.js:48
+n2 @ index-DKApGEUo.js:38
+Bg @ index-DKApGEUo.js:40
+ac @ index-DKApGEUo.js:40
+cA @ index-DKApGEUo.js:40
+rs @ index-DKApGEUo.js:38
+Fz @ index-DKApGEUo.js:40
+ys @ index-DKApGEUo.js:40
+M2 @ index-DKApGEUo.js:40
+w @ index-DKApGEUo.js:25
+T @ index-DKApGEUo.js:25
+index-DKApGEUo.js:486   GET https://cybaemtech.in/Agile/api/auth/status 404 (Not Found)
+s @ index-DKApGEUo.js:486
+(anonymous) @ index-DKApGEUo.js:486
+Bg @ index-DKApGEUo.js:40
+ac @ index-DKApGEUo.js:40
+Fz @ index-DKApGEUo.js:40
+ys @ index-DKApGEUo.js:40
+cA @ index-DKApGEUo.js:40
+rs @ index-DKApGEUo.js:38
+(anonymous) @ index-DKApGEUo.js:40
+setTimeout
+i @ index-DKApGEUo.js:48
+o @ index-DKApGEUo.js:48
+batch @ index-DKApGEUo.js:48
+fa @ index-DKApGEUo.js:48
+s @ index-DKApGEUo.js:48
+p @ index-DKApGEUo.js:48
+(anonymous) @ index-DKApGEUo.js:48
+Promise.catch
+v @ index-DKApGEUo.js:48
+start @ index-DKApGEUo.js:48
+fetch @ index-DKApGEUo.js:48
+Pd @ index-DKApGEUo.js:48
+onSubscribe @ index-DKApGEUo.js:48
+subscribe @ index-DKApGEUo.js:48
+(anonymous) @ index-DKApGEUo.js:48
+n2 @ index-DKApGEUo.js:38
+Bg @ index-DKApGEUo.js:40
+ac @ index-DKApGEUo.js:40
+cA @ index-DKApGEUo.js:40
+rs @ index-DKApGEUo.js:38
+Fz @ index-DKApGEUo.js:40
+ys @ index-DKApGEUo.js:40
+M2 @ index-DKApGEUo.js:40
+w @ index-DKApGEUo.js:25
+T @ index-DKApGEUo.js:25
+index-DKApGEUo.js:486   POST https://cybaemtech.in/Agile/api/auth/login 404 (Not Found)
+l @ index-DKApGEUo.js:486
+(anonymous) @ index-DKApGEUo.js:298
+await in (anonymous)
+iU @ index-DKApGEUo.js:37
+oU @ index-DKApGEUo.js:37
+sU @ index-DKApGEUo.js:37
+IE @ index-DKApGEUo.js:37
+Wk @ index-DKApGEUo.js:37
+(anonymous) @ index-DKApGEUo.js:37
+dj @ index-DKApGEUo.js:40
+dk @ index-DKApGEUo.js:37
+Yx @ index-DKApGEUo.js:37
+FS @ index-DKApGEUo.js:37
+jU @ index-DKApGEUo.js:37
+index-DKApGEUo.js:486 Login response: {message: 'Endpoint not found'}

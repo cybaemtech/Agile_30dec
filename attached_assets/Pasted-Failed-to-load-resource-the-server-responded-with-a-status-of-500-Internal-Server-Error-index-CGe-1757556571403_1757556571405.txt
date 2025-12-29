@@ -1,0 +1,54 @@
+Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+index-CGeJSAd1.js:342 Current user: Object
+index-CGeJSAd1.js:342 All users: Array(0)
+index-CGeJSAd1.js:342 Projects fetched: Array(3)
+api/users:1   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+index-CGeJSAd1.js:342 Opening modal: createProject undefined
+index-CGeJSAd1.js:342 Current user: Object
+index-CGeJSAd1.js:342 All users: Array(0)
+index-CGeJSAd1.js:342 Projects fetched: Array(3)
+index-CGeJSAd1.js:342  Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+(anonymous) @ index-CGeJSAd1.js:342
+zg @ index-CGeJSAd1.js:40
+oc @ index-CGeJSAd1.js:40
+Wz @ index-CGeJSAd1.js:40
+xs @ index-CGeJSAd1.js:40
+fA @ index-CGeJSAd1.js:40
+ns @ index-CGeJSAd1.js:38
+(anonymous) @ index-CGeJSAd1.js:40
+index-CGeJSAd1.js:342 Project key input: TEST123 -> TEST123
+index-CGeJSAd1.js:342 Submitting project data: Object
+/api/projects:1   Failed to load resource: the server responded with a status of 404 (Not Found)
+index-CGeJSAd1.js:342  Error creating project: Error: 404: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<p>Additionally, a 404 Not Found
+error was encountered while trying to use an ErrorDocument to handle the request.</p>
+</body></html>
+
+    at wM (index-CGeJSAd1.js:48:43178)
+    at async Yi (index-CGeJSAd1.js:48:43379)
+    at async s (index-CGeJSAd1.js:342:27533)
+    at async index-CGeJSAd1.js:298:61519
+s @ index-CGeJSAd1.js:342
+index-CGeJSAd1.js:342  Error details: undefined
+s @ index-CGeJSAd1.js:342
+index-CGeJSAd1.js:342 Current user: Object
+index-CGeJSAd1.js:342 All users: Array(0)
+index-CGeJSAd1.js:342 Projects fetched: Array(3)
+index-CGeJSAd1.js:342 Current user: Object
+index-CGeJSAd1.js:342 All users: Array(0)
+index-CGeJSAd1.js:342 Projects fetched: Array(3)
+index-CGeJSAd1.js:342 Closing modal
+index-CGeJSAd1.js:342 Current user: Object
+index-CGeJSAd1.js:342 All users: Array(0)
+index-CGeJSAd1.js:342 Projects fetched: Array(3)
+api/users/64:1   Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[NEW] Explain Console errors by using Copilot in Edge: click
+         
+         to explain an error. 
+        Learn more
+        Don't show again

@@ -1,0 +1,165 @@
+PS C:\xampp\htdocs\Agile\agilephp (11)\agilephp> npm run dev
+
+> rest-express@1.0.0 dev
+> cross-env NODE_ENV=development tsx server/index.ts
+
+[dotenv@17.2.0] injecting env (9) from .env (tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit)
+🔗 Attempting to connect to MySQL database...
+Using in-memory storage - data will not persist between restarts
+[dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  enable debug logging with { debug: true })
+3:37:50 PM [express] Initializing test data...
+3:37:50 PM [express] Sample project created successfully!
+3:37:50 PM [express] Test data initialized successfully!
+3:37:50 PM [express] Generating sample data...
+3:37:50 PM [express] Created user: John Smith
+3:37:50 PM [express] Created user: Maria Johnson
+3:37:50 PM [express] Created user: Alex Lee
+3:37:50 PM [express] Created user: Sarah Chang
+3:37:50 PM [express] Created user: Ryan Thomas
+3:37:50 PM [express] Created user: Jessica Patel
+3:37:50 PM [express] Created user: Marcus Wilson
+3:37:50 PM [express] Created user: Diana Garcia
+3:37:50 PM [express] Created user: Tyler Kim
+3:37:50 PM [express] Created user: Lisa Anderson
+3:37:50 PM [express] Created user: Eduardo Martinez
+3:37:50 PM [express] Created user: Nina Brown
+3:37:50 PM [express] Created user: Kevin Park
+3:37:50 PM [express] Created user: Laura Robinson
+3:37:50 PM [express] Created user: David Carter
+3:37:50 PM [express] Created user: Maria Rodriguez
+3:37:50 PM [express] Created user: Aiden Travers
+3:37:50 PM [express] Created user: Jordan Gillespie
+3:37:50 PM [express] Created user: Sofia Lopez
+3:37:50 PM [express] Created user: Jason Nguyen
+3:37:50 PM [express] Created team: Engineering Team
+3:37:50 PM [express] Added Lisa Anderson to Engineering Team
+3:37:50 PM [express] Added Tyler Kim to Engineering Team
+3:37:50 PM [express] Added David Carter to Engineering Team
+3:37:50 PM [express] Created team: Design Team
+3:37:50 PM [express] Added Nina Brown to Design Team
+3:37:50 PM [express] Added Laura Robinson to Design Team
+3:37:50 PM [express] Added Lisa Anderson to Design Team
+3:37:50 PM [express] Created team: Marketing Team
+3:37:50 PM [express] Added Eduardo Martinez to Marketing Team
+3:37:50 PM [express] Added Jason Nguyen to Marketing Team
+3:37:50 PM [express] Added Alex Lee to Marketing Team
+3:37:50 PM [express] Created team: Operations Team
+3:37:50 PM [express] Added Jason Nguyen to Operations Team
+3:37:50 PM [express] Added Tyler Kim to Operations Team
+3:37:50 PM [express] Added David Carter to Operations Team
+3:37:50 PM [express] Created team: Product Team
+3:37:50 PM [express] Added David Carter to Product Team
+3:37:50 PM [express] Added Sarah Chang to Product Team
+3:37:50 PM [express] Added Jason Nguyen to Product Team
+3:37:50 PM [express] Created project: Enterprise Resource Planning System
+3:37:50 PM [express] Created epic: Finance Module
+3:37:50 PM [express] Created feature: General Ledger
+3:37:50 PM [express] Created feature: Accounts Payable
+3:37:50 PM [express] Created feature: Accounts Receivable
+3:37:50 PM [express] Created feature: Financial Reporting
+3:37:50 PM [express] Created epic: Human Resources Module
+3:37:50 PM [express] Created feature: Employee Records
+3:37:50 PM [express] Created feature: Payroll Processing
+3:37:50 PM [express] Created feature: Benefits Administration
+3:37:50 PM [express] Created feature: Time & Attendance
+3:37:50 PM [express] Created epic: Inventory Management
+3:37:50 PM [express] Created feature: Item Tracking
+3:37:50 PM [express] Created feature: Warehouse Management
+3:37:50 PM [express] Created feature: Order Processing
+3:37:50 PM [express] Created feature: Inventory Analytics
+3:37:50 PM [express] Created project: Customer Experience Platform
+3:37:50 PM [express] Created epic: Customer Portal
+3:37:50 PM [express] Created feature: General Ledger
+3:37:50 PM [express] Created feature: Accounts Payable
+3:37:50 PM [express] Created feature: Accounts Receivable
+3:37:50 PM [express] Created feature: Financial Reporting
+3:37:50 PM [express] Created epic: Support Ticketing System
+3:37:50 PM [express] Created feature: Employee Records
+3:37:50 PM [express] Created feature: Payroll Processing
+3:37:50 PM [express] Created feature: Benefits Administration
+3:37:50 PM [express] Created feature: Time & Attendance
+3:37:50 PM [express] Created epic: Customer Analytics
+3:37:50 PM [express] Created feature: Item Tracking
+3:37:50 PM [express] Created feature: Warehouse Management
+3:37:50 PM [express] Created feature: Order Processing
+3:37:50 PM [express] Created feature: Inventory Analytics
+3:37:50 PM [express] Created project: Data Analytics Dashboard
+3:37:50 PM [express] Created epic: Data Visualization
+3:37:50 PM [express] Created feature: General Ledger
+3:37:50 PM [express] Created feature: Accounts Payable
+3:37:50 PM [express] Created feature: Accounts Receivable
+3:37:50 PM [express] Created feature: Financial Reporting
+3:37:50 PM [express] Created epic: Predictive Analytics
+3:37:50 PM [express] Created feature: Employee Records
+3:37:50 PM [express] Created feature: Payroll Processing
+3:37:50 PM [express] Created feature: Benefits Administration
+3:37:50 PM [express] Created feature: Time & Attendance
+3:37:50 PM [express] Created epic: Reporting System
+3:37:50 PM [express] Created feature: Item Tracking
+3:37:50 PM [express] Created feature: Warehouse Management
+3:37:50 PM [express] Created feature: Order Processing
+3:37:50 PM [express] Created feature: Inventory Analytics
+3:37:50 PM [express] Created project: Cloud Migration Initiative
+3:37:50 PM [express] Created epic: Infrastructure Assessment
+3:37:50 PM [express] Created feature: General Ledger
+3:37:50 PM [express] Created feature: Accounts Payable
+3:37:50 PM [express] Created feature: Accounts Receivable
+3:37:50 PM [express] Created feature: Financial Reporting
+3:37:50 PM [express] Created epic: Migration Strategy
+3:37:50 PM [express] Created feature: Employee Records
+3:37:50 PM [express] Created feature: Payroll Processing
+3:37:50 PM [express] Created feature: Benefits Administration
+3:37:50 PM [express] Created feature: Time & Attendance
+3:37:50 PM [express] Created epic: Cloud Implementation
+3:37:50 PM [express] Created feature: Item Tracking
+3:37:50 PM [express] Created feature: Warehouse Management
+3:37:50 PM [express] Created feature: Order Processing
+3:37:50 PM [express] Created feature: Inventory Analytics
+3:37:50 PM [express] Created project: Mobile Workforce Solution
+3:37:50 PM [express] Created epic: Field Operations
+3:37:50 PM [express] Created feature: General Ledger
+3:37:50 PM [express] Created feature: Accounts Payable
+3:37:50 PM [express] Created feature: Accounts Receivable
+3:37:50 PM [express] Created feature: Financial Reporting
+3:37:50 PM [express] Created epic: Team Collaboration
+3:37:50 PM [express] Created feature: Employee Records
+3:37:50 PM [express] Created feature: Payroll Processing
+3:37:50 PM [express] Created feature: Benefits Administration
+3:37:50 PM [express] Created feature: Time & Attendance
+3:37:50 PM [express] Created epic: Offline Capabilities
+3:37:50 PM [express] Created feature: Item Tracking
+3:37:50 PM [express] Created feature: Warehouse Management
+3:37:50 PM [express] Created feature: Order Processing
+3:37:50 PM [express] Created feature: Inventory Analytics
+3:37:50 PM [express] Sample data generation completed successfully
+3:37:50 PM [express] Sample data already exists, generating additional items with fixed generator...
+3:37:50 PM [express] Generating 150 random work items...
+3:37:50 PM [express] Creating items for project: Project Management App
+3:37:50 PM [express] Created 18 items for project Project Management App
+3:37:50 PM [express] Creating items for project: Enterprise Resource Planning System
+3:37:50 PM [express] Created 25 items for project Enterprise Resource Planning System
+3:37:51 PM [express] Creating items for project: Customer Experience Platform
+3:37:51 PM [express] Created 25 items for project Customer Experience Platform
+3:37:51 PM [express] Creating items for project: Data Analytics Dashboard
+3:37:51 PM [express] Created 25 items for project Data Analytics Dashboard
+3:37:51 PM [express] Creating items for project: Cloud Migration Initiative
+3:37:51 PM [express] Created 25 items for project Cloud Migration Initiative
+3:37:51 PM [express] Creating items for project: Mobile Workforce Solution
+3:37:51 PM [express] Created 25 items for project Mobile Workforce Solution
+3:37:51 PM [express] Successfully generated 143 random work items
+3:37:51 PM [express] Creating sample role-based users if they don't exist...
+3:37:51 PM [express] Created ADMIN user - admin@example.com
+3:37:51 PM [express] Created SCRUM_MASTER user - scrum@example.com
+3:37:51 PM [express] Created 2 sample role-based users successfully.
+3:37:51 PM [express] ✅ Server is running on port 5000
+✅ Successfully connected to cPanel MySQL database
+📊 Using database connection: mysql://cybaemtech_Agile:****@103.48.43.49:3306/cybaemtech_Agile
+Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+3:38:51 PM [express] GET /api/auth/user 401 in 9ms :: {"message":"Not authenticated"}
+3:38:51 PM [express] GET /api/auth/status 304 in 3ms :: {"authenticated":false}
+Login failed for admin@cybaemtech.com: user not found or inactive
+3:39:04 PM [express] POST /api/auth/login 401 in 4ms :: {"message":"Invalid credentials"}
+Login failed for admin@cybaemtech.com: user not found or inactive
+3:39:09 PM [express] POST /api/auth/login 401 in 3ms :: {"message":"Invalid credentials"}

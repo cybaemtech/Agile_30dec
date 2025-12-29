@@ -1,0 +1,11 @@
+# Replit files
+.replit
+.local/
+
+# Node files
+node_modules/
+dist/
+
+# Environment
+.env
+.env.local

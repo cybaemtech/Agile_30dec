@@ -1,0 +1,141 @@
+❌ Using in-memory storage - data will not persist between restarts
+5:17:22 PM [express] Initializing test data...
+5:17:22 PM [express] Sample project created successfully!
+5:17:22 PM [express] Test data initialized successfully!
+5:17:22 PM [express] Generating sample data...
+5:17:22 PM [express] Created user: John Smith
+5:17:22 PM [express] Created user: Maria Johnson
+5:17:22 PM [express] Created user: Alex Lee
+5:17:22 PM [express] Created user: Sarah Chang
+5:17:22 PM [express] Created user: Ryan Thomas
+5:17:22 PM [express] Created user: Jessica Patel
+5:17:22 PM [express] Created user: Marcus Wilson
+5:17:22 PM [express] Created user: Diana Garcia
+5:17:22 PM [express] Created user: Tyler Kim
+5:17:22 PM [express] Created user: Lisa Anderson
+5:17:22 PM [express] Created user: Eduardo Martinez
+5:17:22 PM [express] Created user: Nina Brown
+5:17:22 PM [express] Created user: Kevin Park
+5:17:22 PM [express] Created user: Laura Robinson
+5:17:22 PM [express] Created user: David Carter
+5:17:22 PM [express] Created user: Maria Rodriguez
+5:17:22 PM [express] Created user: Aiden Travers
+5:17:22 PM [express] Created user: Jordan Gillespie
+5:17:22 PM [express] Created user: Sofia Lopez
+5:17:22 PM [express] Created user: Jason Nguyen
+5:17:22 PM [express] Created team: Engineering Team
+5:17:22 PM [express] Added Aiden Travers to Engineering Team
+5:17:22 PM [express] Added Jordan Gillespie to Engineering Team
+5:17:22 PM [express] Added Ryan Thomas to Engineering Team
+5:17:22 PM [express] Created team: Design Team
+5:17:22 PM [express] Added Maria Rodriguez to Design Team
+5:17:22 PM [express] Added David Carter to Design Team
+5:17:22 PM [express] Added John Smith to Design Team
+5:17:22 PM [express] Created team: Marketing Team
+5:17:22 PM [express] Added Maria Rodriguez to Marketing Team
+5:17:22 PM [express] Added John Smith to Marketing Team
+5:17:22 PM [express] Added Sofia Lopez to Marketing Team
+5:17:22 PM [express] Created team: Operations Team
+5:17:22 PM [express] Added Nina Brown to Operations Team
+5:17:22 PM [express] Added Kevin Park to Operations Team
+5:17:22 PM [express] Added Sofia Lopez to Operations Team
+5:17:22 PM [express] Created team: Product Team
+5:17:22 PM [express] Added Alex Lee to Product Team
+5:17:22 PM [express] Added Maria Rodriguez to Product Team
+5:17:22 PM [express] Added David Carter to Product Team
+5:17:22 PM [express] Created project: Enterprise Resource Planning System
+5:17:22 PM [express] Created epic: Finance Module
+5:17:22 PM [express] Created feature: General Ledger
+5:17:22 PM [express] Created feature: Accounts Payable
+5:17:22 PM [express] Created feature: Accounts Receivable
+5:17:22 PM [express] Created feature: Financial Reporting
+5:17:22 PM [express] Created epic: Human Resources Module
+5:17:22 PM [express] Created feature: Employee Records
+5:17:22 PM [express] Created feature: Payroll Processing
+5:17:22 PM [express] Created feature: Benefits Administration
+5:17:22 PM [express] Created feature: Time & Attendance
+5:17:22 PM [express] Created epic: Inventory Management
+5:17:22 PM [express] Created feature: Item Tracking
+5:17:22 PM [express] Created feature: Warehouse Management
+5:17:22 PM [express] Created feature: Order Processing
+5:17:22 PM [express] Created feature: Inventory Analytics
+5:17:22 PM [express] Created project: Customer Experience Platform
+5:17:22 PM [express] Created epic: Customer Portal
+5:17:22 PM [express] Created feature: General Ledger
+5:17:22 PM [express] Created feature: Accounts Payable
+5:17:22 PM [express] Created feature: Accounts Receivable
+5:17:22 PM [express] Created feature: Financial Reporting
+5:17:22 PM [express] Created epic: Support Ticketing System
+5:17:22 PM [express] Created feature: Employee Records
+5:17:22 PM [express] Created feature: Payroll Processing
+5:17:22 PM [express] Created feature: Benefits Administration
+5:17:22 PM [express] Created feature: Time & Attendance
+5:17:22 PM [express] Created epic: Customer Analytics
+5:17:22 PM [express] Created feature: Item Tracking
+5:17:22 PM [express] Created feature: Warehouse Management
+5:17:22 PM [express] Created feature: Order Processing
+5:17:22 PM [express] Created feature: Inventory Analytics
+5:17:22 PM [express] Created project: Data Analytics Dashboard
+5:17:22 PM [express] Created epic: Data Visualization
+5:17:22 PM [express] Created feature: General Ledger
+5:17:22 PM [express] Created feature: Accounts Payable
+5:17:22 PM [express] Created feature: Accounts Receivable
+5:17:22 PM [express] Created feature: Financial Reporting
+5:17:22 PM [express] Created epic: Predictive Analytics
+5:17:22 PM [express] Created feature: Employee Records
+5:17:22 PM [express] Created feature: Payroll Processing
+5:17:22 PM [express] Created feature: Benefits Administration
+5:17:22 PM [express] Created feature: Time & Attendance
+5:17:22 PM [express] Created epic: Reporting System
+5:17:22 PM [express] Created feature: Item Tracking
+5:17:22 PM [express] Created feature: Warehouse Management
+5:17:22 PM [express] Created feature: Order Processing
+5:17:22 PM [express] Created feature: Inventory Analytics
+5:17:22 PM [express] Created project: Cloud Migration Initiative
+5:17:22 PM [express] Created epic: Infrastructure Assessment
+5:17:22 PM [express] Created feature: General Ledger
+5:17:22 PM [express] Created feature: Accounts Payable
+5:17:22 PM [express] Created feature: Accounts Receivable
+5:17:22 PM [express] Created feature: Financial Reporting
+5:17:22 PM [express] Created epic: Migration Strategy
+5:17:22 PM [express] Created feature: Employee Records
+5:17:22 PM [express] Created feature: Payroll Processing
+5:17:22 PM [express] Created feature: Benefits Administration
+5:17:22 PM [express] Created feature: Time & Attendance
+5:17:22 PM [express] Created epic: Cloud Implementation
+5:17:22 PM [express] Created feature: Item Tracking
+5:17:22 PM [express] Created feature: Warehouse Management
+5:17:22 PM [express] Created feature: Order Processing
+5:17:22 PM [express] Created feature: Inventory Analytics
+5:17:22 PM [express] Created project: Mobile Workforce Solution
+5:17:22 PM [express] Created epic: Field Operations
+5:17:22 PM [express] Created feature: General Ledger
+5:17:22 PM [express] Created feature: Accounts Payable
+5:17:22 PM [express] Created feature: Accounts Receivable
+5:17:22 PM [express] Created feature: Financial Reporting
+5:17:22 PM [express] Created epic: Team Collaboration
+5:17:22 PM [express] Created feature: Employee Records
+5:17:22 PM [express] Created feature: Payroll Processing
+5:17:22 PM [express] Created feature: Benefits Administration
+5:17:23 PM [express] Created feature: Time & Attendance
+5:17:23 PM [express] Created epic: Offline Capabilities
+5:17:23 PM [express] Created feature: Item Tracking
+5:17:23 PM [express] Created feature: Warehouse Management
+5:17:23 PM [express] Created feature: Order Processing
+5:17:23 PM [express] Created feature: Inventory Analytics
+5:17:23 PM [express] Sample data generation completed successfully
+5:17:23 PM [express] Sample data already exists, generating additional items with fixed generator...
+5:17:23 PM [express] Generating 150 random work items...
+5:17:23 PM [express] Creating items for project: Mobile Workforce Solution
+5:17:23 PM [express] Created 21 items for project Mobile Workforce Solution
+5:17:23 PM [express] Successfully generated 21 random work items
+5:17:23 PM [express] Creating sample role-based users if they don't exist...
+✅ Successfully connected to cPanel MySQL database
+📊 Using database connection: mysql://cybaemtech_Agile:****@localhost:3306/cybaemtech_agile
+5:17:23 PM [express] Created ADMIN user - admin@example.com
+5:17:23 PM [express] Created SCRUM_MASTER user - scrum@example.com
+5:17:23 PM [express] Created 2 sample role-based users successfully.
+5:17:23 PM [express] ✅ Server is running on port 5000
+Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme

@@ -1,0 +1,33 @@
+PS C:\xampp\htdocs\Agile\agilephp (15)\agilephp> npm run dev
+
+> rest-express@1.0.0 dev
+> cross-env NODE_ENV=development tsx server/index.ts
+
+[dotenv@17.2.0] injecting env (9) from .env (tip: ⚙️  suppress all logs with { quiet: true })
+🔗 Attempting to connect to MySQL database...
+[dotenv@17.2.0] injecting env (0) from .env (tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] })
+⏳ Waiting for database connection... (5 retries left)
+✅ Successfully connected to cPanel MySQL database
+📊 Using database connection: mysql://cybaemtech_Agile:****@localhost:3306/cybaemtech_agile
+✅ Using MySQL database for data storage
+2:14:45 PM [express] Test data already exists.
+2:14:45 PM [express] Sample data already exists, skipping generation
+2:14:45 PM [express] Sample data already exists, generating additional items with fixed generator...
+2:14:45 PM [express] Generating 150 random work items...
+2:14:45 PM [express] Creating items for project: Project Management App
+2:14:45 PM [express] Created 1 items for project Project Management App
+2:14:45 PM [express] Creating items for project: E-commerce Platform
+2:14:45 PM [express] Error generating random work items: TypeError: Cannot read properties of undefined (reading 'projectId')
+TypeError: Cannot read properties of undefined (reading 'projectId')
+    at createChildItems (C:\xampp\htdocs\Agile\agilephp (15)\agilephp\server\fixed-data-generator.ts:245:29)
+    at createChildItems (C:\xampp\htdocs\Agile\agilephp (15)\agilephp\server\fixed-data-generator.ts:258:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateRandomWorkItems (C:\xampp\htdocs\Agile\agilephp (15)\agilephp\server\fixed-data-generator.ts:147:13)
+    at async <anonymous> (C:\xampp\htdocs\Agile\agilephp (15)\agilephp\server\index.ts:230:7)
+2:14:45 PM [express] Creating sample role-based users if they don't exist...
+2:14:45 PM [express] Sample role-based users already exist.
+2:14:45 PM [express] ✅ Server is running on port 5000
+Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+2:14:52 PM [express] GET /api/auth/user 401 in 4ms :: {"message":"Not authenticated"}

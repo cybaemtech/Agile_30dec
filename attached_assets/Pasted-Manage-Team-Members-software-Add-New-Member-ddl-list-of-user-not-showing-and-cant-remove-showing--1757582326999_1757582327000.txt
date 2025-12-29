@@ -1,0 +1,70 @@
+Manage Team Members - software
+Add New Member ddl list of user not showing and cant remove showing error
+DELETE https://cybaemtech.in/Agile/api/teams/23/members/22 404 (Not Found)
+zi @ index-Dn5Nrl7Y.js:48
+mutationFn @ index-Dn5Nrl7Y.js:409
+fn @ index-Dn5Nrl7Y.js:48
+v @ index-Dn5Nrl7Y.js:48
+start @ index-Dn5Nrl7Y.js:48
+execute @ index-Dn5Nrl7Y.js:48
+await in execute
+mutate @ index-Dn5Nrl7Y.js:48
+(anonymous) @ index-Dn5Nrl7Y.js:48
+x @ index-Dn5Nrl7Y.js:409
+onClick @ index-Dn5Nrl7Y.js:409
+sU @ index-Dn5Nrl7Y.js:37
+cU @ index-Dn5Nrl7Y.js:37
+uU @ index-Dn5Nrl7Y.js:37
+$E @ index-Dn5Nrl7Y.js:37
+zk @ index-Dn5Nrl7Y.js:37
+(anonymous) @ index-Dn5Nrl7Y.js:37
+hj @ index-Dn5Nrl7Y.js:40
+pk @ index-Dn5Nrl7Y.js:37
+Qx @ index-Dn5Nrl7Y.js:37
+US @ index-Dn5Nrl7Y.js:37
+EU @ index-Dn5Nrl7Y.js:37
+Create New Item
+Item Type
+Epic
+Feature
+Story
+Task
+Bug
+cant create showing
+POST https://cybaemtech.in/Agile/api/api/work-items 404 (Not Found)
+zo @ index-Dn5Nrl7Y.js:48
+h @ index-Dn5Nrl7Y.js:342
+(anonymous) @ index-Dn5Nrl7Y.js:298
+await in (anonymous)
+sU @ index-Dn5Nrl7Y.js:37
+cU @ index-Dn5Nrl7Y.js:37
+uU @ index-Dn5Nrl7Y.js:37
+$E @ index-Dn5Nrl7Y.js:37
+zk @ index-Dn5Nrl7Y.js:37
+(anonymous) @ index-Dn5Nrl7Y.js:37
+hj @ index-Dn5Nrl7Y.js:40
+pk @ index-Dn5Nrl7Y.js:37
+Qx @ index-Dn5Nrl7Y.js:37
+US @ index-Dn5Nrl7Y.js:37
+EU @ index-Dn5Nrl7Y.js:37
+index-Dn5Nrl7Y.js:342 Error creating work item: Error: 404: {"message":"API endpoint not found"}
+at SM (index-Dn5Nrl7Y.js:48:43356)
+at async zo (index-Dn5Nrl7Y.js:48:43625)
+at async h (index-Dn5Nrl7Y.js:342:37846)
+at async index-Dn5Nrl7Y.js:298:61503
+h @ index-Dn5Nrl7Y.js:342
+await in h
+(anonymous) @ index-Dn5Nrl7Y.js:298
+await in (anonymous)
+sU @ index-Dn5Nrl7Y.js:37
+cU @ index-Dn5Nrl7Y.js:37
+uU @ index-Dn5Nrl7Y.js:37
+$E @ index-Dn5Nrl7Y.js:37
+zk @ index-Dn5Nrl7Y.js:37
+(anonymous) @ index-Dn5Nrl7Y.js:37
+hj @ index-Dn5Nrl7Y.js:40
+pk @ index-Dn5Nrl7Y.js:37
+Qx @ index-Dn5Nrl7Y.js:37
+US @ index-Dn5Nrl7Y.js:37
+EU @ index-Dn5Nrl7Y.js:37
+calender cat fetch the data to show on frontend fix these alsoac

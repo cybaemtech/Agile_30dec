@@ -1,0 +1,91 @@
+project management timeline/Gantt view with the following requirements:
+Core Features:
+1. View Modes (Dropdown Selection):
+Month View: Display 12 months of a single year
+Quarter View: Display 4 quarters spanning 1.5 years
+Year View: Display 3 full years
+Include dropdown with these three options
+2. Project Data Structure: Each project should have:
+Project key (e.g., "CYB002", "ASN")
+Project name
+Status (PLANNING, ACTIVE, COMPLETED)
+Team name and member count
+Start date and end date
+Statistics: epics, features, stories, tasks, bugs counts
+Created by (email)
+3. Sample Projects: Include 10 projects:
+6 short-term projects (2-6 months duration)
+4 long-term projects spanning 3-4+ years (starting from 2023-2024, ending 2027-2029)
+4. Layout Structure:
+Fixed left panel (320px width) showing project details
+Scrollable timeline area on the right
+Top header with search, filters, and controls
+Bottom legend showing status colors and indicators
+5. Left Panel - Project Details: Display for each project:
+Status badge (color-coded: blue for Planning, yellow for Active, gray for Completed)
+Project key in monospace font
+Project name (bold)
+Team name with member count and user icon
+Work breakdown: Epics, Features, Stories, Tasks counts
+Duration badge (purple) for projects over 2 years showing "X.X years"
+6. Timeline Features:
+Horizontal bars showing project duration
+Color-coded bars matching status (blue=Planning, green=Active, gray=Completed)
+Display project name and total work items on bars
+Start/end date markers (vertical lines)
+Grid lines separating time periods
+Hover effects on bars (shadow enhancement)
+7. Long-Term Project Handling:
+Timeline navigation with prev/next arrow buttons
+Show current year range in the middle
+Continuation indicators:
+Left chevron arrow if project started before visible range
+Right chevron arrow if project continues beyond visible range
+Semi-transparent overlay on bar edges for continuations
+Show "Not in current view range" message for completely hidden projects
+Display full date range below each timeline bar
+8. Search Functionality:
+Search bar at top with search icon
+Real-time filtering as user types
+Search across: project name, key, team name, status
+Clear button (X) when search has text
+Show "Found X projects matching 'query'" below search
+Empty state with message when no results found
+9. Additional Filters:
+"All Status" button (dropdown placeholder)
+"All Teams" button (dropdown placeholder)
+10. Header Elements:
+"Projects Timeline" title with subtitle "Manage and monitor all your projects"
+Blue "+ New Project" button in top right
+11. Technical Requirements:
+Use React with hooks (useState, useMemo)
+Use Tailwind CSS for styling
+Import icons from lucide-react: Users, Calendar, Search, X, ChevronLeft, ChevronRight
+Calculate positions dynamically based on dates and view mode
+Smooth transitions and hover effects
+Responsive horizontal scrolling for wide timelines
+12. Position Calculation Logic:
+Calculate project bar position as percentage of visible timeline
+Account for projects starting before or ending after visible range
+Clip bars to visible area boundaries
+Handle different timeline ranges for each view mode
+13. Color Scheme:
+Background: gray-50
+Cards: white with borders
+Status badges: soft colors with borders
+Active state: blue-500
+Hover states: subtle gray backgrounds
+Purple accent for long-term project badges
+14. Behavior:
+Search filters projects in real-time
+View mode dropdown changes timeline granularity
+Navigation arrows shift the entire timeline by 1 year
+All data persists when switching views or navigating
+Make the interface clean, professional, and similar to modern project management tools like Jira or Asana timeline views.
+Optional additions you can specify:
+"Add export functionality"
+"Include project progress percentage"
+"Add drag-and-drop to adjust dates"
+"Include milestone markers"
+"Add team color coding"
+"Include today's date indicator"
