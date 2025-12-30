@@ -109,6 +109,14 @@ export default function ProjectDetails() {
   // State for inline editing in backlog view
   const [editingCell, setEditingCell] = useState<{ itemId: number; field: 'title' | 'status' | 'priority' | 'assignee' | 'severity' } | null>(null);
   const [editValues, setEditValues] = useState<{ title?: string; status?: string; priority?: string; assignee?: string; severity?: string }>({});
+  
+  // State for tracking which item's actual hours is blinking
+  const [blinkingItemId, setBlinkingItemId] = useState<number | null>(null);
+  
+  // State for actual hours popup dialog
+  const [showActualHoursDialog, setShowActualHoursDialog] = useState(false);
+  const [actualHoursInputValue, setActualHoursInputValue] = useState<string>("");
+  const [pendingItemForHours, setPendingItemForHours] = useState<WorkItem | null>(null);
 
   // Quick action modal state for creating items under parent work items
   const [quickActionModal, setQuickActionModal] = useState<{
@@ -244,12 +252,19 @@ export default function ProjectDetails() {
       }
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data, { itemId, updates }) => {
       queryClient.invalidateQueries({ queryKey: [`/projects/${projectId}/work-items`] });
-      toast({
-        title: "Updated successfully",
-        description: "Work item has been updated",
-      });
+      // Only show toast if status is NOT changing to DONE, or if it's a parent item
+      if (updates.status !== 'DONE') {
+        toast({
+          title: "Updated successfully",
+          description: "Work item has been updated",
+        });
+      } else {
+        // For DONE status, trigger blink animation on actual hours column
+        setBlinkingItemId(itemId);
+        setTimeout(() => setBlinkingItemId(null), 1500); // Remove blink after animation completes
+      }
     },
     onError: (error: Error) => {
       toast({
@@ -330,17 +345,19 @@ export default function ProjectDetails() {
 
   // Helper function to handle status change with validation
   const handleStatusChange = (itemId: number, newStatus: string, item: WorkItem) => {
-    // Validation: Actual Hours required when status is DONE for non-parent items
+    // FIRST CHECK: Actual Hours required when status is DONE for non-parent items
     if (newStatus === 'DONE' && !item.actualHours && !['EPIC', 'FEATURE', 'STORY'].includes(item.type)) {
-      toast({
-        title: "Actual Hours Required",
-        description: "Please enter actual hours spent before marking as Done.",
-        variant: "destructive",
-      });
-      openModal("EDIT_ITEM", { workItem: item, projects });
-      return;
+      // Do NOT update status - open popup dialog to enter actual hours first
+      setBlinkingItemId(itemId); // Show blink on actual hours column to draw attention
+      setTimeout(() => setBlinkingItemId(null), 2000);
+      setPendingItemForHours(item);
+      setActualHoursInputValue("");
+      setShowActualHoursDialog(true);
+      cancelInlineEdit();
+      return; // STOP - don't update status yet
     }
 
+    // SECOND CHECK: Validation for parent items with incomplete children
     if (newStatus === 'DONE' && ['EPIC', 'FEATURE', 'STORY'].includes(item.type)) {
       const validation = canMarkParentAsDone(item, workItems || []);
 
@@ -356,12 +373,45 @@ export default function ProjectDetails() {
       }
     }
 
-    // If validation passes, proceed with the update
+    // If all validations pass, proceed with status update
     updateWorkItemMutation.mutate({
       itemId: itemId,
       updates: { status: newStatus }
     });
     cancelInlineEdit();
+  };
+
+  // Helper function to save actual hours and mark as done
+  const handleSaveActualHours = async () => {
+    if (!pendingItemForHours || !actualHoursInputValue.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter actual hours",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const hours = parseFloat(actualHoursInputValue);
+    if (isNaN(hours) || hours < 0) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid number",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Update item with both actual hours and status
+    updateWorkItemMutation.mutate({
+      itemId: pendingItemForHours.id,
+      updates: { actualHours: hours, status: 'DONE' }
+    });
+
+    // Close dialog
+    setShowActualHoursDialog(false);
+    setActualHoursInputValue("");
+    setPendingItemForHours(null);
   };
 
   // Function to handle navigation with null check
@@ -1918,12 +1968,43 @@ export default function ProjectDetails() {
                                 </span>
                               </td>
                               <td className="px-2 py-1.5 border-r border-neutral-200">
-                                <span className={`inline-block px-1.5 py-0.5 rounded-sm text-xs ${item.status === 'TODO' ? 'bg-neutral-100 text-neutral-800' :
-                                  item.status === 'IN_PROGRESS' ? 'bg-amber-100 text-amber-800' :
-                                    'bg-emerald-100 text-emerald-800'
-                                  }`}>
-                                  {item.status.replace('_', ' ')}
-                                </span>
+                                {editingCell?.itemId === item.id && editingCell?.field === 'status' ? (
+                                  <Select
+                                    value={editValues.status || item.status}
+                                    onValueChange={(value) => {
+                                      setEditValues({ ...editValues, status: value });
+                                      handleStatusChange(item.id, value, item);
+                                    }}
+                                    open={true}
+                                    onOpenChange={(open) => {
+                                      if (!open) cancelInlineEdit();
+                                    }}
+                                  >
+                                    <SelectTrigger className="h-6 w-32 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="TODO">To Do</SelectItem>
+                                      <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
+                                      <SelectItem value="DONE">Done</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                ) : (
+                                  <span
+                                    className={`inline-block px-1.5 py-0.5 rounded-sm text-xs cursor-pointer hover:opacity-80 ${item.status === 'TODO' ? 'bg-neutral-100 text-neutral-800' :
+                                      item.status === 'IN_PROGRESS' ? 'bg-amber-100 text-amber-800' :
+                                        'bg-emerald-100 text-emerald-800'
+                                      }`}
+                                    onClick={() => {
+                                      if (canUserEditWorkItem(item, currentUser, workItems || [])) {
+                                        startInlineEdit(item.id, 'status', item.status);
+                                      }
+                                    }}
+                                    title={canUserEditWorkItem(item, currentUser, workItems || []) ? 'Click to change status' : 'No permission to edit'}
+                                  >
+                                    {item.status.replace('_', ' ')}
+                                  </span>
+                                )}
                               </td>
                               <td className="px-2 py-1.5 border-r border-neutral-200">
                                 {item.priority ? (
@@ -1961,7 +2042,7 @@ export default function ProjectDetails() {
                                   <span className="text-neutral-400 text-xs">-</span>
                                 )}
                               </td>
-                              <td className="px-2 py-1.5 border-r border-neutral-200">
+                              <td className={`px-2 py-1.5 border-r border-neutral-200 ${blinkingItemId === item.id ? 'animate-blink-cell' : ''}`}>
                                 <span className="text-xs text-neutral-600 text-center">
                                   {item.estimate ? `${Number(item.estimate).toFixed(1)}h` : '-'}
                                   {item.actualHours && (
@@ -3037,6 +3118,54 @@ export default function ProjectDetails() {
               disabled={isAssigningTeam || !assignTeamId}
             >
               {isAssigningTeam ? "Assigning..." : (project?.teamId ? "Change Team" : "Assign Team")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Actual Hours Dialog */}
+      <Dialog open={showActualHoursDialog} onOpenChange={setShowActualHoursDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add Actual Hours</DialogTitle>
+            <DialogDescription>
+              {pendingItemForHours ? `Enter actual hours spent on "${pendingItemForHours.title}"` : 'Enter actual hours spent'}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div>
+              <label htmlFor="actualHours" className="block text-sm font-medium mb-2">
+                Actual Hours
+              </label>
+              <Input
+                id="actualHours"
+                type="number"
+                step="0.5"
+                min="0"
+                placeholder="Enter hours (e.g., 5.5)"
+                value={actualHoursInputValue}
+                onChange={(e) => setActualHoursInputValue(e.target.value)}
+                autoFocus
+              />
+            </div>
+          </div>
+
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowActualHoursDialog(false);
+                setActualHoursInputValue("");
+                setPendingItemForHours(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSaveActualHours}
+            >
+              Save & Mark Done
             </Button>
           </DialogFooter>
         </DialogContent>

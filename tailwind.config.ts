@@ -88,10 +88,22 @@ export default {
             height: "0",
           },
         },
+        "blink-cell": {
+          "0%": {
+            backgroundColor: "transparent",
+          },
+          "50%": {
+            backgroundColor: "rgba(34, 197, 94, 0.3)",
+          },
+          "100%": {
+            backgroundColor: "transparent",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "blink-cell": "blink-cell 1.5s ease-in-out",
       },
     },
   },
