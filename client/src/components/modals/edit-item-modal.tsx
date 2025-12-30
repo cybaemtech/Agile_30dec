@@ -248,11 +248,20 @@ export function EditItemModal({
         currentBehavior: displayWorkItem.currentBehavior,
         expectedBehavior: displayWorkItem.expectedBehavior,
         bugType: displayWorkItem.bugType,
-        severity: displayWorkItem.severity
+        severity: displayWorkItem.severity,
+        actualHours: displayWorkItem.actualHours,
+        actualHoursString: displayWorkItem.actualHours?.toString(),
+        status: displayWorkItem.status
       });
 
       // Map both possible snake_case and camelCase field names from backend response
       const itemData = displayWorkItem as any;
+      
+      // Properly handle actualHours - convert to string for form, handle falsy values
+      const actualHoursValue = displayWorkItem.actualHours !== null && displayWorkItem.actualHours !== undefined 
+        ? displayWorkItem.actualHours.toString()
+        : "";
+      
       const formData: WorkItemFormValues = {
         title: displayWorkItem.title,
         description: displayWorkItem.description || "",
@@ -262,7 +271,7 @@ export function EditItemModal({
         parentId: displayWorkItem.parentId || null,
         assigneeId: displayWorkItem.assigneeId || null,
         estimate: displayWorkItem.estimate?.toString() || "",
-        actualHours: displayWorkItem.actualHours?.toString() || "",
+        actualHours: actualHoursValue,
         startDate: startDateFormatted,
         endDate: endDateFormatted,
         projectId: displayWorkItem.projectId,
@@ -281,13 +290,16 @@ export function EditItemModal({
       // CRITICAL: Double-check if the form actually reset with values
       // Sometimes react-hook-form needs a tiny tick to reflect values from displayWorkItem
       if (itemData.current_behavior || itemData.currentBehavior) {
-        form.setValue("currentBehavior", itemData.currentBehavior || itemData.current_behavior || "", { shouldDirty: true, shouldTouch: true });
+        form.setValue("currentBehavior", itemData.currentBehavior || itemData.current_behavior || "", { shouldDirty: false, shouldTouch: false });
       }
       if (itemData.expected_behavior || itemData.expectedBehavior) {
-        form.setValue("expectedBehavior", itemData.expectedBehavior || itemData.expected_behavior || "", { shouldDirty: true, shouldTouch: true });
+        form.setValue("expectedBehavior", itemData.expectedBehavior || itemData.expected_behavior || "", { shouldDirty: false, shouldTouch: false });
       }
       if (itemData.bug_type || itemData.bugType) {
-        form.setValue("bugType", itemData.bugType || itemData.bug_type || "BUG", { shouldDirty: true, shouldTouch: true });
+        form.setValue("bugType", itemData.bugType || itemData.bug_type || "BUG", { shouldDirty: false, shouldTouch: false });
+      }
+      if (displayWorkItem.actualHours !== null && displayWorkItem.actualHours !== undefined) {
+        form.setValue("actualHours", actualHoursValue, { shouldDirty: false, shouldTouch: false });
       }
 
       // Verify form was reset
@@ -298,13 +310,16 @@ export function EditItemModal({
         const bugTypeVal = itemData.bugType || itemData.bug_type || "BUG";
 
         if (currentVal) {
-          form.setValue("currentBehavior", currentVal, { shouldValidate: true, shouldDirty: true });
+          form.setValue("currentBehavior", currentVal, { shouldValidate: false, shouldDirty: false });
         }
         if (expectedVal) {
-          form.setValue("expectedBehavior", expectedVal, { shouldValidate: true, shouldDirty: true });
+          form.setValue("expectedBehavior", expectedVal, { shouldValidate: false, shouldDirty: false });
         }
         if (bugTypeVal) {
-          form.setValue("bugType", bugTypeVal, { shouldValidate: true, shouldDirty: true });
+          form.setValue("bugType", bugTypeVal, { shouldValidate: false, shouldDirty: false });
+        }
+        if (displayWorkItem.actualHours !== null && displayWorkItem.actualHours !== undefined) {
+          form.setValue("actualHours", actualHoursValue, { shouldValidate: false, shouldDirty: false });
         }
 
         console.log("📋 Form values after reset:", {
@@ -312,8 +327,10 @@ export function EditItemModal({
           currentBehavior: form.getValues("currentBehavior"),
           expectedBehavior: form.getValues("expectedBehavior"),
           severity: form.getValues("severity"),
+          actualHours: form.getValues("actualHours"),
+          status: form.getValues("status")
         });
-      }, 100);
+      }, 50);
     }
   }, [displayWorkItem, isOpen, form]);
 
@@ -606,18 +623,28 @@ export function EditItemModal({
                           {(watchedBugType === 'DEFECT' || watchedBugType === 'PROD_INCIDENT') && <span className="text-red-500"> *</span>}
                         </FormLabel>
                         <FormControl>
-                          <Textarea 
-                            {...field} 
-                            placeholder="What is happening?" 
-                            rows={2} 
-                            className="text-sm" 
-                            value={field.value || ""} 
-                            onChange={(e) => {
-                              field.onChange(e);
-                              form.trigger("currentBehavior");
-                            }} 
-                          />
+                              <Textarea 
+                                {...field} 
+                                placeholder="What is happening?" 
+                                rows={2} 
+                                className={`text-sm ${(watchedBugType === 'DEFECT' || watchedBugType === 'PROD_INCIDENT') && !field.value ? "border-orange-500 ring-2 ring-orange-300 bg-orange-50" : ""}`}
+                                value={field.value ?? ""} 
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  form.trigger("currentBehavior");
+                                }} 
+                              />
                         </FormControl>
+                        {(watchedBugType === 'DEFECT' || watchedBugType === 'PROD_INCIDENT') && !field.value && (
+                          <FormDescription className="text-orange-600 font-medium text-[11px]">
+                            ⚠️ Required for Defects and Production Incidents
+                          </FormDescription>
+                        )}
+                        {(watchedBugType === 'DEFECT' || watchedBugType === 'PROD_INCIDENT') && field.value && (
+                          <FormDescription className="text-green-600 text-[11px]">
+                            ✓ Documented
+                          </FormDescription>
+                        )}
                         <FormMessage />
                       </FormItem>
                     )}
@@ -633,18 +660,28 @@ export function EditItemModal({
                           {(watchedBugType === 'DEFECT' || watchedBugType === 'PROD_INCIDENT') && <span className="text-red-500"> *</span>}
                         </FormLabel>
                         <FormControl>
-                          <Textarea 
-                            {...field} 
-                            placeholder="What should happen?" 
-                            rows={2} 
-                            className="text-sm" 
-                            value={field.value || ""} 
-                            onChange={(e) => {
-                              field.onChange(e);
-                              form.trigger("currentBehavior"); // currentBehavior holds the refinement error
-                            }} 
-                          />
+                              <Textarea 
+                                {...field} 
+                                placeholder="What should happen?" 
+                                rows={2} 
+                                className={`text-sm ${(watchedBugType === 'DEFECT' || watchedBugType === 'PROD_INCIDENT') && !field.value ? "border-orange-500 ring-2 ring-orange-300 bg-orange-50" : ""}`}
+                                value={field.value ?? ""} 
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  form.trigger("currentBehavior");
+                                }} 
+                              />
                         </FormControl>
+                        {(watchedBugType === 'DEFECT' || watchedBugType === 'PROD_INCIDENT') && !field.value && (
+                          <FormDescription className="text-orange-600 font-medium text-[11px]">
+                            ⚠️ Required for Defects and Production Incidents
+                          </FormDescription>
+                        )}
+                        {(watchedBugType === 'DEFECT' || watchedBugType === 'PROD_INCIDENT') && field.value && (
+                          <FormDescription className="text-green-600 text-[11px]">
+                            ✓ Documented
+                          </FormDescription>
+                        )}
                         <FormMessage />
                       </FormItem>
                     )}
@@ -1003,7 +1040,11 @@ export function EditItemModal({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
-                        Actual Hours {['STORY', 'FEATURE', 'EPIC'].includes(workItem.type) ? "(Auto-calculated)" : ""}
+                        Actual Hours 
+                        {['STORY', 'FEATURE', 'EPIC'].includes(workItem.type) ? 
+                          " (Auto-calculated)" 
+                          : isActualHoursEnabled && <span className="text-red-500">*</span>
+                        }
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -1011,20 +1052,24 @@ export function EditItemModal({
                           step="0.1"
                           {...field}
                           placeholder="Hours"
-                          value={field.value || ""}
-                          disabled={['STORY', 'FEATURE', 'EPIC'].includes(workItem.type) || !isActualHoursEnabled}
-                          className={!['STORY', 'FEATURE', 'EPIC'].includes(workItem.type) && !isActualHoursEnabled ? "bg-muted" : !['STORY', 'FEATURE', 'EPIC'].includes(workItem.type) && isActualHoursEnabled && !field.value ? "animate-pulse border-orange-500 ring-2 ring-orange-200" : ""}
+                          value={field.value !== undefined && field.value !== null && field.value !== '' ? field.value : ''}
+                          disabled={['STORY', 'FEATURE', 'EPIC'].includes(workItem.type)}
+                          className={['STORY', 'FEATURE', 'EPIC'].includes(workItem.type) ? "bg-muted" : isActualHoursEnabled && !field.value ? "border-orange-500 ring-2 ring-orange-300 bg-orange-50" : ""}
                         />
                       </FormControl>
                       {['STORY', 'FEATURE', 'EPIC'].includes(workItem.type) ? (
                         <FormDescription className="text-[10px]">
                           Sum of all child items.
                         </FormDescription>
-                      ) : isActualHoursEnabled && !field.value && (
-                        <FormDescription className="text-orange-600 font-medium text-[10px]">
-                          Please enter actual hours spent to complete this item.
+                      ) : (isActualHoursEnabled && (field.value === undefined || field.value === null || field.value === "")) ? (
+                        <FormDescription className="text-orange-600 font-medium text-[11px]">
+                          ⚠️ Required: Please enter actual hours spent to complete this item.
                         </FormDescription>
-                      )}
+                      ) : (isActualHoursEnabled && (field.value !== undefined && field.value !== null && field.value !== "")) ? (
+                        <FormDescription className="text-green-600 text-[11px]">
+                          ✓ {field.value} hours recorded
+                        </FormDescription>
+                      ) : null}
                       <FormMessage />
                     </FormItem>
                   )}

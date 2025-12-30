@@ -95,6 +95,7 @@ function getAllWorkItems($conn) {
                     wi.reporter_id as reporterId,
                     wi.last_updated_by as updatedBy,
                     wi.estimate,
+                    wi.actual_hours as actualHours,
                     wi.start_date as startDate,
                     wi.end_date as endDate,
                     wi.github_url as githubUrl,
@@ -139,6 +140,7 @@ function getAllWorkItems($conn) {
                     wi.reporter_id as reporterId,
                     wi.updated_by as updatedBy,
                     wi.estimate,
+                    wi.actual_hours as actualHours,
                     wi.start_date as startDate,
                     wi.end_date as endDate,
                     wi.github_url as githubUrl,
@@ -183,6 +185,7 @@ function getAllWorkItems($conn) {
                     wi.reporter_id as reporterId,
                     wi.reporter_id as updatedBy,
                     wi.estimate,
+                    wi.actual_hours as actualHours,
                     wi.start_date as startDate,
                     wi.end_date as endDate,
                     wi.github_url as githubUrl,
@@ -237,6 +240,7 @@ function getAllWorkItems($conn) {
                 'reporterId' => $item['reporterId'] ? (int)$item['reporterId'] : null,
                 'updatedBy' => $item['updatedBy'] ? (int)$item['updatedBy'] : null,
                 'estimate' => $item['estimate'] ? (int)$item['estimate'] : null,
+                'actualHours' => isset($item['actualHours']) ? (float)$item['actualHours'] : null,
                 'startDate' => $item['startDate'],
                 'endDate' => $item['endDate'],
                 'githubUrl' => $item['githubUrl'],
@@ -295,6 +299,7 @@ function getWorkItem($conn, $workItemId) {
                     wi.reporter_id as reporterId,
                     wi.last_updated_by as updatedBy,
                     wi.estimate,
+                    wi.actual_hours as actualHours,
                     wi.start_date as startDate,
                     wi.end_date as endDate,
                     wi.github_url as githubUrl,
@@ -315,7 +320,6 @@ function getWorkItem($conn, $workItemId) {
                 WHERE wi.id = ?
             ");
         } elseif ($hasUpdatedBy) {
-        } elseif ($hasUpdatedBy) {
             // Use updated_by column if it exists (fallback)
             $stmt = $conn->prepare("
                 SELECT 
@@ -333,6 +337,7 @@ function getWorkItem($conn, $workItemId) {
                     wi.reporter_id as reporterId,
                     wi.updated_by as updatedBy,
                     wi.estimate,
+                    wi.actual_hours as actualHours,
                     wi.start_date as startDate,
                     wi.end_date as endDate,
                     wi.github_url as githubUrl,
@@ -370,6 +375,7 @@ function getWorkItem($conn, $workItemId) {
                     wi.reporter_id as reporterId,
                     wi.reporter_id as updatedBy,
                     wi.estimate,
+                    wi.actual_hours as actualHours,
                     wi.start_date as startDate,
                     wi.end_date as endDate,
                     wi.github_url as githubUrl,
@@ -422,6 +428,7 @@ function getWorkItem($conn, $workItemId) {
             'reporterId' => $item['reporterId'] ? (int)$item['reporterId'] : null,
             'updatedBy' => $item['updatedBy'] ? (int)$item['updatedBy'] : null,
             'estimate' => $item['estimate'] ? (int)$item['estimate'] : null,
+            'actualHours' => isset($item['actualHours']) ? (float)$item['actualHours'] : null,
             'startDate' => $item['startDate'],
             'endDate' => $item['endDate'],
             'githubUrl' => $item['githubUrl'],
@@ -911,24 +918,33 @@ function updateWorkItem($pdo, $id, $data) {
         'expectedBehavior' => 'expected_behavior'
     ];
     
+
     // Convert camelCase to snake_case
     $convertedData = [];
     foreach ($data as $key => $value) {
         $dbField = isset($fieldMapping[$key]) ? $fieldMapping[$key] : $key;
-        $convertedData[$dbField] = $value;
+        // Special handling for actual_hours: always convert to float or null
+        if ($dbField === 'actual_hours') {
+            if ($value === '' || $value === null) {
+                $convertedData[$dbField] = null;
+            } else {
+                $convertedData[$dbField] = is_numeric($value) ? (float)$value : null;
+            }
+        } else {
+            $convertedData[$dbField] = $value;
+        }
     }
-    
+
     error_log("Converted data: " . json_encode($convertedData));
-    
+
     $allowedFields = ['title', 'description', 'tags', 'status', 'priority', 'type', 'assignee_id', 'estimate', 'start_date', 'end_date', 'parent_id', 'bug_type', 'severity', 'reference_url', 'screenshot', 'estimated_hours', 'actual_hours', 'current_behavior', 'expected_behavior'];
-    
+
     $updateFields = [];
     $params = [':id' => $id];
-    
+
     foreach ($allowedFields as $field) {
         if (array_key_exists($field, $convertedData)) {
             error_log("Processing field: " . $field . " = " . json_encode($convertedData[$field]));
-            
             // Special handling for date fields
             if ($field === 'start_date' || $field === 'end_date') {
                 $dateValue = $convertedData[$field];
@@ -952,10 +968,12 @@ function updateWorkItem($pdo, $id, $data) {
                         $params[":$field"] = null;
                     }
                 }
+            } else if ($field === 'actual_hours') {
+                // Always update actual_hours, even if 0 or null
+                $params[":$field"] = $convertedData[$field];
             } else {
                 $params[":$field"] = $convertedData[$field];
             }
-            
             $updateFields[] = "$field = :$field";
         }
     }

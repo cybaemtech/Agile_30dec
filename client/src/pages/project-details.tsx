@@ -107,8 +107,9 @@ export default function ProjectDetails() {
   const [showAssignTeamDialog, setShowAssignTeamDialog] = useState(false);
 
   // State for inline editing in backlog view
-  const [editingCell, setEditingCell] = useState<{ itemId: number; field: 'title' | 'status' | 'priority' | 'assignee' | 'severity' } | null>(null);
-  const [editValues, setEditValues] = useState<{ title?: string; status?: string; priority?: string; assignee?: string; severity?: string }>({});
+  type EditableField = 'title' | 'status' | 'priority' | 'assignee' | 'severity' | 'actualHours';
+  const [editingCell, setEditingCell] = useState<{ itemId: number; field: EditableField } | null>(null);
+  const [editValues, setEditValues] = useState<{ title?: string; status?: string; priority?: string; assignee?: string; severity?: string; actualHours?: string }>({});
   
   // State for tracking which item's actual hours is blinking
   const [blinkingItemId, setBlinkingItemId] = useState<number | null>(null);
@@ -276,7 +277,7 @@ export default function ProjectDetails() {
   });
 
   // Helper function to start inline editing
-  const startInlineEdit = (itemId: number, field: 'title' | 'status' | 'priority' | 'assignee', currentValue: string) => {
+  const startInlineEdit = (itemId: number, field: EditableField, currentValue: string) => {
     if (!canUserEditWorkItem(workItems?.find(i => i.id === itemId), currentUser, workItems || [])) {
       return;
     }
@@ -285,7 +286,7 @@ export default function ProjectDetails() {
   };
 
   // Helper function to save inline edit
-  const saveInlineEdit = async (itemId: number, field: 'title' | 'status' | 'priority' | 'assignee') => {
+  const saveInlineEdit = async (itemId: number, field: EditableField) => {
     const value = editValues[field];
     if (field !== 'assignee' && (value === undefined || value.trim() === '')) {
       toast({
@@ -301,6 +302,9 @@ export default function ProjectDetails() {
     if (field === 'assignee') {
       // Handle assignee field specially - convert to number or null
       updateData.assigneeId = value && value !== 'unassigned' ? parseInt(value) : null;
+    } else if (field === 'actualHours') {
+      // Convert to float for actualHours
+      updateData.actualHours = value ? parseFloat(value) : null;
     } else {
       updateData[field] = value;
     }
@@ -376,7 +380,7 @@ export default function ProjectDetails() {
     // If all validations pass, proceed with status update
     updateWorkItemMutation.mutate({
       itemId: itemId,
-      updates: { status: newStatus }
+      updates: { status: newStatus as 'TODO' | 'IN_PROGRESS' | 'ON_HOLD' | 'DONE' }
     });
     cancelInlineEdit();
   };
@@ -392,7 +396,8 @@ export default function ProjectDetails() {
       return;
     }
 
-    const hours = parseFloat(actualHoursInputValue);
+    // Always send a float or null, never a string
+    let hours = parseFloat(actualHoursInputValue);
     if (isNaN(hours) || hours < 0) {
       toast({
         title: "Error",
@@ -402,10 +407,10 @@ export default function ProjectDetails() {
       return;
     }
 
-    // Update item with both actual hours and status
+    // Patch: always send actualHours as a float, never as a string or empty
     updateWorkItemMutation.mutate({
       itemId: pendingItemForHours.id,
-      updates: { actualHours: hours, status: 'DONE' }
+      updates: { actualHours: actualHoursInputValue, status: 'DONE' }
     });
 
     // Close dialog
@@ -1556,12 +1561,12 @@ export default function ProjectDetails() {
                       // Add a blinking effect to the Actual Hours field and open edit modal
                       setEditingCell({ itemId, field: 'actualHours' });
                       setTimeout(() => {
-                        openModal('edit', { workItem: item });
+                        openModal('edit' as any, { workItem: item });
                       }, 300);
                       toast({
                         title: "Fill Actual Hours",
                         description: "Please enter Actual Hours before marking as Done.",
-                        variant: "warning"
+                        variant: "default"
                       });
                       return;
                     }
@@ -2419,7 +2424,7 @@ export default function ProjectDetails() {
                                     setEditValues({ ...editValues, priority: value });
                                     updateWorkItemMutation.mutate({
                                       itemId: item.id,
-                                      updates: { priority: value }
+                                      updates: { priority: value as 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' | null | undefined }
                                     });
                                     cancelInlineEdit();
                                   }}
@@ -2533,9 +2538,50 @@ export default function ProjectDetails() {
 
                             {/* Actual Hrs Column */}
                             <td className="px-2 py-1">
-                              <span className="text-[10px] text-gray-600">
-                                {item.actualHours ? Number(item.actualHours).toFixed(1) : '-'}
-                              </span>
+                              {editingCell?.itemId === item.id && editingCell?.field === 'actualHours' ? (
+                                <input
+                                  type="number"
+                                  min="0"
+                                  step="0.1"
+                                  value={editValues.actualHours ?? (item.actualHours ?? '')}
+                                  onChange={e => setEditValues({ ...editValues, actualHours: e.target.value })}
+                                  onBlur={() => saveInlineEdit(item.id, 'actualHours')}
+                                  onKeyDown={e => {
+                                    if (e.key === 'Enter') saveInlineEdit(item.id, 'actualHours');
+                                    else if (e.key === 'Escape') cancelInlineEdit();
+                                  }}
+                                  autoFocus
+                                  className="w-16 text-xs px-2 py-1 border-2 border-orange-500 rounded focus:outline-none focus:ring-2 focus:ring-orange-300 bg-white z-10 relative"
+                                  title="Edit actual hours"
+                                  placeholder="Actual hrs"
+                                />
+                              ) : (item.actualHours !== undefined && item.actualHours !== null) ? (
+                                <span
+                                  className={`text-xs text-orange-600 font-medium ${canUserEditWorkItem(item, currentUser, workItems || []) ? 'cursor-pointer hover:underline' : ''}`}
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    if (canUserEditWorkItem(item, currentUser, workItems || [])) {
+                                      startInlineEdit(item.id, 'actualHours', String(item.actualHours));
+                                    }
+                                  }}
+                                  title={canUserEditWorkItem(item, currentUser, workItems || []) ? 'Click to edit actual hours' : ''}
+                                >
+                                  {Number(item.actualHours).toFixed(1)}h
+                                </span>
+                              ) : (
+                                <span
+                                  className={`text-neutral-400 text-xs ${canUserEditWorkItem(item, currentUser, workItems || []) ? 'cursor-pointer hover:text-orange-600' : ''}`}
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    if (canUserEditWorkItem(item, currentUser, workItems || [])) {
+                                      startInlineEdit(item.id, 'actualHours', '');
+                                    }
+                                  }}
+                                  title={canUserEditWorkItem(item, currentUser, workItems || []) ? 'Click to set actual hours' : ''}
+                                >
+                                  -
+                                </span>
+                              )}
                             </td>
 
                             {/* Assignee Column */}
@@ -2553,9 +2599,13 @@ export default function ProjectDetails() {
                                       cancelInlineEdit();
                                     } catch (error) {
                                       console.error("Error updating assignee:", error);
+                                      let message = 'Unknown error';
+                                      if (error && typeof error === 'object' && 'message' in error) {
+                                        message = (error as any).message;
+                                      }
                                       toast({
                                         title: "Error",
-                                        description: `Failed to update assignee: ${error.message || 'Unknown error'}`,
+                                        description: `Failed to update assignee: ${message}`,
                                         variant: "destructive",
                                       });
                                       cancelInlineEdit();
