@@ -664,22 +664,9 @@ export class DatabaseStorage {
     if (filters.statuses && filters.statuses.length > 0) {
       conditions.push(sql`${workItems.status} IN (${filters.statuses.map(s => `'${s}'`).join(',')})`);
     }
-        const result = await db.insert(workItems).values({
-          ...insertWorkItem,
-          externalId,
-          createdByName,
-          createdByEmail,
-          actualHours: insertWorkItem.actualHours !== undefined && insertWorkItem.actualHours !== null && insertWorkItem.actualHours !== '' ? String(Number(insertWorkItem.actualHours)) : null,
-          screenshot: null, // Don't store in screenshot column
-          screenshotBlob: insertWorkItem.screenshot || null, // Store in screenshot_blob column
-          screenshotPath: insertWorkItem.screenshotPath || null,
-          updatedAt: new Date(),
-        });
-        const workItem = result[0];
-        if (workItem.parentId) {
-          await this.calculateHierarchyHours(workItem.parentId);
-        }
-        return workItem;
+
+    return await db
+      .select()
       .from(workItems)
       .where(and(...conditions))
       .orderBy(desc(workItems.updatedAt));

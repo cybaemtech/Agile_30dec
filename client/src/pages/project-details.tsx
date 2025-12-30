@@ -330,6 +330,17 @@ export default function ProjectDetails() {
 
   // Helper function to handle status change with validation
   const handleStatusChange = (itemId: number, newStatus: string, item: WorkItem) => {
+    // Validation: Actual Hours required when status is DONE for non-parent items
+    if (newStatus === 'DONE' && !item.actualHours && !['EPIC', 'FEATURE', 'STORY'].includes(item.type)) {
+      toast({
+        title: "Actual Hours Required",
+        description: "Please enter actual hours spent before marking as Done.",
+        variant: "destructive",
+      });
+      openModal("EDIT_ITEM", { workItem: item, projects });
+      return;
+    }
+
     if (newStatus === 'DONE' && ['EPIC', 'FEATURE', 'STORY'].includes(item.type)) {
       const validation = canMarkParentAsDone(item, workItems || []);
 

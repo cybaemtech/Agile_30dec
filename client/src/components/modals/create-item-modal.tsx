@@ -58,8 +58,17 @@ const workItemFormSchema = z.object({
   }
   return true;
 }, {
-  message: "Description is required for Bugs",
+  message: "Description is required for Stories and Bugs",
   path: ["description"],
+}).refine((data) => {
+  // Actual hours is required when status is DONE
+  if (data.status === 'DONE') {
+    return data.actualHours !== undefined && data.actualHours !== null && data.actualHours.trim().length > 0;
+  }
+  return true;
+}, {
+  message: "Actual hours is required when status is DONE",
+  path: ["actualHours"],
 }).refine((data) => {
   // Estimate is required for all types
   return data.estimate && data.estimate.trim().length > 0;
@@ -489,6 +498,8 @@ export function CreateItemModal({
       default: return "Parent";
     }
   };
+
+  const isActualHoursEnabled = form.watch("status") === "DONE";
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -1005,8 +1016,15 @@ export function CreateItemModal({
                           {...field}
                           placeholder="Hours"
                           value={field.value || ""}
+                          disabled={!isActualHoursEnabled}
+                          className={!isActualHoursEnabled ? "bg-muted" : isActualHoursEnabled && !field.value ? "animate-pulse border-orange-500 ring-2 ring-orange-200" : ""}
                         />
                       </FormControl>
+                      {isActualHoursEnabled && !field.value && (
+                        <FormDescription className="text-orange-600 font-medium text-xs">
+                          Please enter actual hours spent to complete this item.
+                        </FormDescription>
+                      )}
                       <FormMessage />
                     </FormItem>
                   )}
